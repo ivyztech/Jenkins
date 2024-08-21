@@ -1,8 +1,8 @@
 pipeline {
-    agent any
+    agent {
         docker {
-            image 'python:3.9' // Use an official Python Docker image
-            args '-u root'     // Optional: run as root if you need to install additional packages
+            image 'python:3.9'  // Use an official Python Docker image
+            args '-u root'      // Optional: run as root if you need to install additional packages
         }
     }
 
@@ -13,15 +13,6 @@ pipeline {
     }
 
     stages {
-        stage('Install Python 3') {
-            steps {
-                sh '''
-                sudo apt-get update
-                sudo apt-get install -y python3 python3-venv python3-pip
-                '''
-            }
-        }
-
         stage('Build') {
             steps {
                 echo "fetch the source code from the directory path specified by the environment variable: ${env.DIRECTORY_PATH}"
