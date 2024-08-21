@@ -1,5 +1,10 @@
 pipeline {
     agent any
+        docker {
+            image 'python:3.9' // Use an official Python Docker image
+            args '-u root'     // Optional: run as root if you need to install additional packages
+        }
+    }
 
     environment {
         DIRECTORY_PATH = 'https://github.com/ivyztech/Jenkins.git'
