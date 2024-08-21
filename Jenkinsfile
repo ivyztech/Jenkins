@@ -2,12 +2,21 @@ pipeline {
     agent any
 
     environment {
-        DIRECTORY_PATH = 'https://github.com/ivyztech/Jenkins.git'  
+        DIRECTORY_PATH = 'https://github.com/ivyztech/Jenkins.git'
         TESTING_ENVIRONMENT = 'staging'
-        PRODUCTION_ENVIRONMENT = 'Dominique' 
+        PRODUCTION_ENVIRONMENT = 'Dominique'
     }
 
     stages {
+        stage('Install Python 3') {
+            steps {
+                sh '''
+                sudo apt-get update
+                sudo apt-get install -y python3 python3-venv python3-pip
+                '''
+            }
+        }
+
         stage('Build') {
             steps {
                 echo "fetch the source code from the directory path specified by the environment variable: ${env.DIRECTORY_PATH}"
