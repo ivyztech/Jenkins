@@ -59,10 +59,17 @@ pipeline {
                  body: "The Jenkins pipeline completed successfully."
         }
         failure {
-            mail to: 'dominiquevillafuerte11@gmail.com',
-                 subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
-                 body: "The Jenkins pipeline failed. Check the attached logs for details.",
-                 attachLog: true // Attach the logs in case of failure
+            script {
+                // Save logs to a file
+                def logFile = "pipeline.log"
+                writeFile file: logFile, text: currentBuild.rawBuild.getLog()
+                
+                // Send email with log file attached
+                emailext to: 'dominiquevillafuerte11@gmail.com',
+                         subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
+                         body: "The Jenkins pipeline failed. Check the attached logs for details.",
+                         attachmentsPattern: logFile
+            }
         }
     }
 }
