@@ -61,8 +61,8 @@ pipeline {
         failure {
             mail to: 'dominiquevillafuerte11@gmail.com',
                  subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
-                 body: "The Jenkins pipeline failed. Check the logs for details."
-                 attachLog: true 
+                 body: "The Jenkins pipeline failed. Check the attached logs for details.",
+                 attachLog: true // Attach the logs in case of failure
         }
     }
 }
